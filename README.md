@@ -1,6 +1,6 @@
-#A simple log library
+# A simple log library
 
-##Initialization
+## Initialization
 Add the contents of the include folder to your project's include directories and include the Log.h file.
 ```cpp
 #include <logger/Log.h>
@@ -11,7 +11,7 @@ int main() {
 	logger::Utils::Initialize();
 ```
 
-##Sample
+## Sample
 ```cpp
 #include <logger/Log.h>
 
