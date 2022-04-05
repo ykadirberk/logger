@@ -41,8 +41,7 @@ int main()
     return EXIT_SUCCESS;
 }
 ```
-<<<<<<< Updated upstream
-=======
+
 Output of sample will be something like this:
 ```
 [LOG:: 2022_4_5 12h_44min_42s_50ms @sample.cpp:13] A LogType::None message.
@@ -52,4 +51,3 @@ Output of sample will be something like this:
 [LOG:: 2022_4_5 12h_44min_42s_52ms @sample.cpp:17][ERROR] A LogType::Error message
 [LOG:: 2022_4_5 12h_44min_42s_52ms @sample.cpp:19][INFO] A message by using function, a LogType::Info message
 ```
->>>>>>> Stashed changes
