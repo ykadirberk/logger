@@ -27,7 +27,7 @@ namespace logger
 			static void Initialize() 
 			{
 				// retrieves the date to construct a file name
-				std::stringstream fileNameStream;
+				std::wstringstream fileNameStream;
 				fileNameStream.clear();
 				fileNameStream
 					<< logger::Utils::GetCurrentTimeAs_YMD()
@@ -35,7 +35,7 @@ namespace logger
 					<< logger::Utils::GetCurrentTimeAs_HH_MM_SS_MS()
 					<< "_logs.txt";
 
-				std::string fileName = fileNameStream.str();
+				std::wstring fileName = fileNameStream.str();
 
 				logger::Utils::SetOutputFile(fileName);
 			}
@@ -44,10 +44,10 @@ namespace logger
 				logger::Utils::file_s.close();
 			}
 
-			static inline std::ofstream file_s;
+			static inline std::wofstream file_s;
 
 
-			static std::string GetCurrentTimeAs_YMD()
+			static std::wstring GetCurrentTimeAs_YMD()
 			{
 				// This method returns 
 				// years, months and days
@@ -62,7 +62,7 @@ namespace logger
 				auto dp{ std::chrono::floor<std::chrono::days>(tp) };
 				std::chrono::year_month_day ymd{ dp };
 
-				std::stringstream concatenateStream;
+				std::wstringstream concatenateStream;
 				concatenateStream.clear();
 				concatenateStream
 					<< static_cast<int>(ymd.year()) << '_'
@@ -70,7 +70,7 @@ namespace logger
 					<< static_cast<unsigned>(ymd.day());
 				return concatenateStream.str();
 			}
-			static std::string GetCurrentTimeAs_HH_MM_SS_MS()
+			static std::wstring GetCurrentTimeAs_HH_MM_SS_MS()
 			{
 				// This method returns 
 				// hours, minutes, seconds and milliseconds
@@ -85,7 +85,7 @@ namespace logger
 				auto dp{ std::chrono::floor<std::chrono::days>(tp) };
 				std::chrono::hh_mm_ss time{ std::chrono::floor<std::chrono::milliseconds>(tp - dp) };
 
-				std::stringstream concatenateStream;
+				std::wstringstream concatenateStream;
 				concatenateStream.clear();
 				concatenateStream
 					<< time.hours() << '_'
@@ -95,15 +95,15 @@ namespace logger
 				return concatenateStream.str();
 			}
 
-			static std::string SplitFileName(const std::string& str)
+			static std::wstring SplitFileName(std::wstring_view str)
 			{
 				// __FILE__ macro is returning full path,
 				// this method is to get only the file name out of it
-				std::size_t found = str.find_last_of("/\\");
-				return str.substr(found + 1);
+				std::size_t found = str.find_last_of(L"/\\");
+				return std::wstring(str.substr(found + 1));
 			}
 
-			static void SetOutputFile(const std::string& fileName) 
+			static void SetOutputFile(std::wstring_view fileName) 
 			{
 				// this is for debug purposes
 				// uncomment if you need to check if fileName is right
@@ -115,23 +115,23 @@ namespace logger
 				}
 
 				// to concatenate the logs folder with fileName
-				std::stringstream pathFile;
-				pathFile << "logs\\" << fileName;
+				std::wstringstream pathFile;
+				pathFile << L"logs\\" << fileName;
 
-				std::string fullPath = pathFile.str();
+				std::wstring fullPath = pathFile.str();
 
 				logger::Utils::file_s.open(fullPath);
 			}
 
-			static std::string GetStringOfLogType(LogType logType) 
+			static std::wstring GetStringOfLogType(LogType logType) 
 			{
 				switch (logType) 
 				{
-					case LogType::None: return "";
-					case LogType::Debug: return "[DEBUG]";
-					case LogType::Info: return "[INFO]";
-					case LogType::Warning: return "[WARNING]";
-					case LogType::Error: return "[ERROR]";
+					case LogType::None: return L"";
+					case LogType::Debug: return L"[DEBUG]";
+					case LogType::Info: return L"[INFO]";
+					case LogType::Warning: return L"[WARNING]";
+					case LogType::Error: return L"[ERROR]";
 					default: throw std::invalid_argument("Unimplemented item");
 				}
 			}

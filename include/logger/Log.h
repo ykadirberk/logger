@@ -4,7 +4,13 @@
 #include "Utils.h"
 #include "LoggerStream.h"
 
-#define LOGT(type)		logger::LoggerStream::LoggerStream(type, __FILE__, __LINE__)
+// these 3 macros needed to make use of wstring_view
+#define WIDE2(x) L##x
+#define WIDE1(x) WIDE2(x)
+#define WFILE WIDE1(__FILE__)
+
+// with function call
+#define LOGT(type)		logger::LoggerStream::LoggerStream(type, WFILE, __LINE__)
 
 #define LOG				LOGT(logger::LogType::None)
 #define DEBUG_LOG		LOGT(logger::LogType::Debug)

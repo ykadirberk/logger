@@ -12,9 +12,9 @@ namespace logger {
 	class LoggerStream
 	{
 		public:
-			LoggerStream(LogType logType, const std::string& fileName, int line) {
+			LoggerStream(LogType logType, std::wstring_view fileName, int line) {
 				mLogType = logType;
-				mFileName = fileName;
+				mFileName = std::wstring(fileName);
 				mLine = line;
 			}
 
@@ -30,18 +30,18 @@ namespace logger {
                 // retrieves the current time in current time zone
                 // and puts it into a stringstream to construct the string
                 // as intended
-                std::stringstream timeHolder;
+                std::wstringstream timeHolder;
                 timeHolder.clear();
                 timeHolder
                     << logger::Utils::GetCurrentTimeAs_YMD() << ' '
                     << logger::Utils::GetCurrentTimeAs_HH_MM_SS_MS();
 
-                std::string message = messageStream.str();
+                std::wstring message = messageStream.str();
 
                 // the output line is constructed here
                 // example output should be like this:
                 // [LOG:: yyyy_mm_dd hh_mm_ss_ms @file_name.ext:line_num] message
-                std::stringstream outputLine;
+                std::wstringstream outputLine;
                 outputLine.clear();
                 outputLine
                     << "[LOG:: "
@@ -54,7 +54,7 @@ namespace logger {
 
                 // defined an std::string to ensure there's
                 // nothing wrong with the constructed output
-                std::string resultString = outputLine.str();
+                std::wstring resultString = outputLine.str();
 
                 // this line is to debug this function
                 // uncomment if you need to check if the output is right
@@ -66,7 +66,7 @@ namespace logger {
                 logger::Utils::file_s.flush();
             }
 
-			std::stringstream messageStream;
+			std::wstringstream messageStream;
 			
 			template<typename T>
 			LoggerStream& operator<<( const T& t) {
@@ -76,7 +76,7 @@ namespace logger {
 
 		private:
 			LogType mLogType;
-			std::string mFileName;
+			std::wstring mFileName;
 			int mLine;
 	};
 }
