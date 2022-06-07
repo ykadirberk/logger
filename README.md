@@ -1,4 +1,4 @@
-# A simple log library
+# Logger - A simple log library
 
 ## Initialization
 Add the contents of the include folder to your project's include directories and include the Log.h file.
